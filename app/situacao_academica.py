@@ -3,7 +3,7 @@
 As regras estão descritas no PRD.md; cada função indica a regra (RNxx) que implementa.
 """
 
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 Numero = int | float | Decimal
 
@@ -11,6 +11,12 @@ NOTA_MINIMA = Decimal("0")
 NOTA_MAXIMA = Decimal("10")
 FREQUENCIA_MINIMA = Decimal("0")
 FREQUENCIA_MAXIMA = Decimal("100")
+
+PESO_P1 = Decimal("0.35")
+PESO_P2 = Decimal("0.35")
+PESO_TRABALHO = Decimal("0.30")
+
+UMA_CASA_DECIMAL = Decimal("0.1")
 
 
 def _converter_para_decimal(valor: Numero, nome_campo: str) -> Decimal:
@@ -52,3 +58,21 @@ def validar_frequencia(frequencia: Numero) -> Decimal:
         raise ValueError("Frequencia deve estar entre 0 e 100")
 
     return frequencia_decimal
+
+
+def _arredondar_uma_casa(valor: Decimal) -> Decimal:
+    """RN02: arredondamento escolar, meio para cima (5,85 -> 5,9 e 5,95 -> 6,0)."""
+    # O round() nativo tem dois problemas aqui: opera sobre float (5.85 é guardado como
+    # 5.8499..., então round(5.85, 1) dá 5.8) e empata para o par (round(0.25, 1) dá 0.2).
+    return valor.quantize(UMA_CASA_DECIMAL, rounding=ROUND_HALF_UP)
+
+
+def calcular_media(p1: Numero, p2: Numero, trabalho: Numero) -> Decimal:
+    """RN02: média ponderada das três notas, arredondada para uma casa."""
+    nota_p1 = validar_nota(p1, "P1")
+    nota_p2 = validar_nota(p2, "P2")
+    nota_trabalho = validar_nota(trabalho, "Trabalho")
+
+    media_sem_arredondar = nota_p1 * PESO_P1 + nota_p2 * PESO_P2 + nota_trabalho * PESO_TRABALHO
+
+    return _arredondar_uma_casa(media_sem_arredondar)
