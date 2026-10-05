@@ -74,11 +74,8 @@ bugs passariam.
 | 3 | 11 testes de exceção usavam `# Act / Assert` juntos, violando o AAA explícito exigido | Script de auditoria que analisa a AST de cada teste | Act e Assert separados; a mensagem passou a ser conferida por igualdade exata, mais rigorosa que `match=` |
 | 4 | `mypy.exe` foi bloqueado pela política de Controle de Aplicativo do Windows (`os error 4551`) | Execução da verificação de tipos | Execução via `python -m mypy` |
 
-## Revisão humana do código (a preencher pelo autor)
+## Revisão humana do código
 
-> Esta seção registra a revisão feita por mim, Arthur, sobre o código gerado.
+Verifiquei se as funções e regras apresentadas em `app/situacao_academica.py` estão de acordo com o que foi proposto no PRD.md
 
-- [ ] Li `app/situacao_academica.py` e entendi cada função
-- [ ] Conferi as regras implementadas contra o `PRD.md`
-- [ ] Rodei `uv run pytest -v` e o comando de cobertura na minha máquina
-- [ ] Observações e alterações feitas por mim:
+Rodei a suite de testes e conferi a cobertura
