@@ -38,27 +38,27 @@ teste passando → commit), com a skill `auditar-testes` ao final.
 - [x] Repositório git e repositório privado no GitHub
 
 ### Tarefa 2 — RN01: validação (`tests/test_validacao.py`)
-- [ ] Testes de BVA de nota (-0,1 · 0,0 · 0,1 · 9,9 · 10,0 · 10,1) e de frequência (-0,01 · 0 · 0,01 · 99,99 · 100 · 100,01)
-- [ ] Testes de EP de tipo (`int`, `float`, `Decimal`) e de EG (`bool`, `str`, `None`, `list`, `nan`, `±inf`, `Decimal("NaN")`)
-- [ ] Ver falhar → implementar `validar_nota`, `validar_frequencia` → ver passar → commit
+- [x] Testes de BVA de nota (-0,1 · 0,0 · 0,1 · 9,9 · 10,0 · 10,1) e de frequência (-0,01 · 0 · 0,01 · 99,99 · 100 · 100,01)
+- [x] Testes de EP de tipo (`int`, `float`, `Decimal`) e de EG (`bool`, `str`, `None`, `list`, `nan`, `±inf`, `Decimal("NaN")`)
+- [x] Ver falhar → implementar `validar_nota`, `validar_frequencia` → ver passar → commit
 
 ### Tarefa 3 — RN02: média (`tests/test_media.py`)
-- [ ] Testes de pesos, do arredondamento HALF_UP (5,94 → 5,9 · 5,95 → 6,0 · 5,85 → 5,9) e de propagação de erro de validação
-- [ ] Ver falhar → implementar `calcular_media` → ver passar → commit
+- [x] Testes de pesos, do arredondamento HALF_UP (5,94 → 5,9 · 5,95 → 6,0 · 5,85 → 5,9) e de propagação de erro de validação
+- [x] Ver falhar → implementar `calcular_media` → ver passar → commit
 
 ### Tarefa 4 — RN03 a RN06: situação (`tests/test_situacao.py`)
-- [ ] EP das 4 situações; BVA de frequência 74,99 / 75 e de média 3,9 / 4,0 e 5,9 / 6,0; EG de falta com nota 10
-- [ ] Ver falhar → implementar `Situacao` e `avaliar_situacao` → ver passar → commit
+- [x] EP das 4 situações; BVA de frequência 74,99 / 75 e de média 3,9 / 4,0 e 5,9 / 6,0; EG de falta com nota 10
+- [x] Ver falhar → implementar `Situacao` e `avaliar_situacao` → ver passar → commit
 
 ### Tarefa 5 — RN07: recuperação (`tests/test_recuperacao.py`)
-- [ ] BVA da média final 5,9 / 6,0; EG de estado (média 3,9 e 6,0); arredondamento da média de entrada
-- [ ] Ver falhar → implementar `calcular_media_final` e `avaliar_recuperacao` → ver passar → commit
+- [x] BVA da média final 5,9 / 6,0; EG de estado (média 3,9 e 6,0); arredondamento da média de entrada
+- [x] Ver falhar → implementar `calcular_media_final` e `avaliar_recuperacao` → ver passar → commit
 
 ### Tarefa 6 — RN08: conceito (`tests/test_conceito.py`)
-- [ ] BVA 7,4 / 7,5 e 8,9 / 9,0; EP A/B/C/D; EG de `APROVADO` com média 5,0 e situação que não é `Situacao`
-- [ ] Ver falhar → implementar `classificar_conceito` → ver passar → commit
+- [x] BVA 7,4 / 7,5 e 8,9 / 9,0; EP A/B/C/D; EG de `APROVADO` com média 5,0 e situação que não é `Situacao`
+- [x] Ver falhar → implementar `classificar_conceito` → ver passar → commit
 
 ### Tarefa 7 — Auditoria e documentação
-- [ ] Rodar a skill `auditar-testes`, incluindo a mutação manual
-- [ ] Escrever `AI_USAGE.md` e `README.md` com as evidências reais
-- [ ] Commit e push
+- [x] Rodar a skill `auditar-testes`, incluindo a mutação manual
+- [x] Escrever `AI_USAGE.md` e `README.md` com as evidências reais
+- [x] Commit e push
