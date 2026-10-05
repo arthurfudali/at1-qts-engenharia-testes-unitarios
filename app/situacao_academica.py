@@ -4,6 +4,7 @@ As regras estão descritas no PRD.md; cada função indica a regra (RNxx) que im
 """
 
 from decimal import ROUND_HALF_UP, Decimal
+from enum import StrEnum
 
 Numero = int | float | Decimal
 
@@ -17,6 +18,17 @@ PESO_P2 = Decimal("0.35")
 PESO_TRABALHO = Decimal("0.30")
 
 UMA_CASA_DECIMAL = Decimal("0.1")
+
+FREQUENCIA_MINIMA_PARA_APROVACAO = Decimal("75")
+MEDIA_MINIMA_PARA_APROVACAO = Decimal("6.0")
+MEDIA_MINIMA_PARA_RECUPERACAO = Decimal("4.0")
+
+
+class Situacao(StrEnum):
+    APROVADO = "APROVADO"
+    RECUPERACAO = "RECUPERACAO"
+    REPROVADO_POR_NOTA = "REPROVADO_POR_NOTA"
+    REPROVADO_POR_FALTA = "REPROVADO_POR_FALTA"
 
 
 def _converter_para_decimal(valor: Numero, nome_campo: str) -> Decimal:
@@ -76,3 +88,27 @@ def calcular_media(p1: Numero, p2: Numero, trabalho: Numero) -> Decimal:
     media_sem_arredondar = nota_p1 * PESO_P1 + nota_p2 * PESO_P2 + nota_trabalho * PESO_TRABALHO
 
     return _arredondar_uma_casa(media_sem_arredondar)
+
+
+def _situacao_pela_media(media: Decimal) -> Situacao:
+    """RN04 a RN06: classifica uma média já arredondada."""
+    if media >= MEDIA_MINIMA_PARA_APROVACAO:
+        return Situacao.APROVADO
+
+    if media >= MEDIA_MINIMA_PARA_RECUPERACAO:
+        return Situacao.RECUPERACAO
+
+    return Situacao.REPROVADO_POR_NOTA
+
+
+def avaliar_situacao(p1: Numero, p2: Numero, trabalho: Numero, frequencia: Numero) -> Situacao:
+    """RN03 a RN06: situação do aluno a partir das notas e da frequência."""
+    # Tudo é validado antes de decidir: uma nota inválida não pode ficar escondida
+    # atrás de uma reprovação por falta.
+    media = calcular_media(p1, p2, trabalho)
+    frequencia_validada = validar_frequencia(frequencia)
+
+    if frequencia_validada < FREQUENCIA_MINIMA_PARA_APROVACAO:
+        return Situacao.REPROVADO_POR_FALTA
+
+    return _situacao_pela_media(media)
