@@ -23,6 +23,9 @@ FREQUENCIA_MINIMA_PARA_APROVACAO = Decimal("75")
 MEDIA_MINIMA_PARA_APROVACAO = Decimal("6.0")
 MEDIA_MINIMA_PARA_RECUPERACAO = Decimal("4.0")
 
+MEDIA_MINIMA_CONCEITO_A = Decimal("9.0")
+MEDIA_MINIMA_CONCEITO_B = Decimal("7.5")
+
 
 class Situacao(StrEnum):
     APROVADO = "APROVADO"
@@ -146,3 +149,27 @@ def avaliar_recuperacao(media: Numero, nota_recuperacao: Numero) -> Situacao:
         return Situacao.APROVADO
 
     return Situacao.REPROVADO_POR_NOTA
+
+
+def classificar_conceito(media: Numero, situacao: Situacao) -> str:
+    """RN08: conceito A, B ou C para aprovados e D para os demais."""
+    # Um texto "APROVADO" seria igual a Situacao.APROVADO (StrEnum compara como str),
+    # então a checagem é de tipo, para obrigar quem chama a usar o enum.
+    if not isinstance(situacao, Situacao):
+        raise TypeError("Situacao invalida")
+
+    media_arredondada = _arredondar_uma_casa(validar_nota(media, "Media"))
+
+    if situacao != Situacao.APROVADO:
+        return "D"
+
+    if media_arredondada < MEDIA_MINIMA_PARA_APROVACAO:
+        raise ValueError("Media incompativel com situacao APROVADO")
+
+    if media_arredondada >= MEDIA_MINIMA_CONCEITO_A:
+        return "A"
+
+    if media_arredondada >= MEDIA_MINIMA_CONCEITO_B:
+        return "B"
+
+    return "C"
