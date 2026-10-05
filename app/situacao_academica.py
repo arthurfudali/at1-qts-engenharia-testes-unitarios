@@ -112,3 +112,37 @@ def avaliar_situacao(p1: Numero, p2: Numero, trabalho: Numero, frequencia: Numer
         return Situacao.REPROVADO_POR_FALTA
 
     return _situacao_pela_media(media)
+
+
+def _validar_media_de_recuperacao(media: Numero) -> Decimal:
+    """RN07: só calcula recuperação para quem tem média entre 4,0 e 6,0 (exclusive)."""
+    # A média é arredondada antes da checagem: um 5,95 recebido vira 6,0 e já está aprovado.
+    media_arredondada = _arredondar_uma_casa(validar_nota(media, "Media"))
+
+    if media_arredondada < MEDIA_MINIMA_PARA_RECUPERACAO:
+        raise ValueError("Aluno nao esta em recuperacao")
+
+    if media_arredondada >= MEDIA_MINIMA_PARA_APROVACAO:
+        raise ValueError("Aluno nao esta em recuperacao")
+
+    return media_arredondada
+
+
+def calcular_media_final(media: Numero, nota_recuperacao: Numero) -> Decimal:
+    """RN07: média entre a média do semestre e a nota da recuperação, arredondada."""
+    media_do_semestre = _validar_media_de_recuperacao(media)
+    nota_da_recuperacao = validar_nota(nota_recuperacao, "Nota de recuperacao")
+
+    media_final_sem_arredondar = (media_do_semestre + nota_da_recuperacao) / 2
+
+    return _arredondar_uma_casa(media_final_sem_arredondar)
+
+
+def avaliar_recuperacao(media: Numero, nota_recuperacao: Numero) -> Situacao:
+    """RN07: depois da recuperação o aluno só pode ser aprovado ou reprovado por nota."""
+    media_final = calcular_media_final(media, nota_recuperacao)
+
+    if media_final >= MEDIA_MINIMA_PARA_APROVACAO:
+        return Situacao.APROVADO
+
+    return Situacao.REPROVADO_POR_NOTA
