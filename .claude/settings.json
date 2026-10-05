@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv.exe run pytest:*)",
+      "Bash(uv.exe sync:*)",
+      "Bash(uv.exe add --dev:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)"
+    ],
+    "ask": [
+      "Edit(**/PRD.md)",
+      "Write(**/PRD.md)",
+      "Bash(uv.exe add:*)"
+    ],
+    "deny": [
+      "Bash(uv.exe remove:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
