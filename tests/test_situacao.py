@@ -173,9 +173,12 @@ def test_avaliar_situacao_recusa_entradas_invalidas(
     # Arrange
     entradas = (p1, p2, trabalho, frequencia)
 
-    # Act / Assert
-    with pytest.raises(erro_esperado, match=mensagem):
+    # Act
+    with pytest.raises(erro_esperado) as erro:
         avaliar_situacao(*entradas)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == mensagem
 
 
 @pytest.mark.unit

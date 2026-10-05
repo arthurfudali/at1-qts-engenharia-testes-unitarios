@@ -119,6 +119,9 @@ def test_calcular_media_valida_cada_nota(
     # Arrange
     notas = (p1, p2, trabalho)
 
-    # Act / Assert
-    with pytest.raises(erro_esperado, match=mensagem):
+    # Act
+    with pytest.raises(erro_esperado) as erro:
         calcular_media(*notas)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == mensagem

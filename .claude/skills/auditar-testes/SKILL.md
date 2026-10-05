@@ -31,12 +31,14 @@ IA tende a gerar valores "confortáveis" no meio da faixa. Procure:
 
 - testes de limite que usam 5,0 em vez de 5,9 / 6,0;
 - `parametrize` sem `ids` ou com `ids` sem prefixo `ep_` / `bva_` / `eg_`;
-- `pytest.raises` sem `match=` (passaria com a exceção errada);
+- teste de exceção que não confere a mensagem exata (`str(erro.value) == ...`), porque passaria
+  com a exceção certa pelo motivo errado;
 - asserts que comparam `float` com `Decimal`, ou que usam `pytest.approx` onde a igualdade deveria ser exata.
 
 ## 4. Forma dos testes
 
-- Todo teste tem `@pytest.mark.unit` e os comentários `# Arrange`, `# Act` e `# Assert`?
+- Todo teste tem `@pytest.mark.unit` e os comentários `# Arrange`, `# Act` e `# Assert`, inclusive
+  os de exceção (nada de `# Act / Assert`)?
 - Algum teste depende de outro ou de ordem de execução?
 
 ## 5. Prova de que os testes pegam erro (mutação manual)

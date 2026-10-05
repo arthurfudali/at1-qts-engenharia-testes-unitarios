@@ -108,9 +108,12 @@ def test_calcular_media_final_recusa_aluno_fora_da_recuperacao(media: float) -> 
     # Arrange
     nota_recuperacao = 8.0
 
-    # Act / Assert
-    with pytest.raises(ValueError, match="Aluno nao esta em recuperacao"):
+    # Act
+    with pytest.raises(ValueError) as erro:
         calcular_media_final(media, nota_recuperacao)
+
+    # Assert
+    assert str(erro.value) == "Aluno nao esta em recuperacao"
 
 
 @pytest.mark.unit
@@ -141,9 +144,12 @@ def test_avaliar_recuperacao_recusa_entradas_invalidas(
     # Arrange
     entradas = (media, nota_recuperacao)
 
-    # Act / Assert
-    with pytest.raises(erro_esperado, match=mensagem):
+    # Act
+    with pytest.raises(erro_esperado) as erro:
         avaliar_recuperacao(*entradas)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == mensagem
 
 
 @pytest.mark.unit

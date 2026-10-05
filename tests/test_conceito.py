@@ -100,9 +100,12 @@ def test_classificar_conceito_recusa_aprovado_com_media_baixa(media: float) -> N
     # Arrange
     situacao = Situacao.APROVADO
 
-    # Act / Assert
-    with pytest.raises(ValueError, match="Media incompativel com situacao APROVADO"):
+    # Act
+    with pytest.raises(ValueError) as erro:
         classificar_conceito(media, situacao)
+
+    # Assert
+    assert str(erro.value) == "Media incompativel com situacao APROVADO"
 
 
 @pytest.mark.unit
@@ -130,6 +133,9 @@ def test_classificar_conceito_recusa_entradas_invalidas(
     # Arrange
     entradas = (media, situacao)
 
-    # Act / Assert
-    with pytest.raises(erro_esperado, match=mensagem):
+    # Act
+    with pytest.raises(erro_esperado) as erro:
         classificar_conceito(*entradas)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == mensagem

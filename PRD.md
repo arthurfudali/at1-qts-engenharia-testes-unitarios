@@ -156,7 +156,9 @@ classificar_conceito(media: Numero, situacao: Situacao) -> str         # RN08
   - `ep_` para Particionamento de Equivalência;
   - `bva_` para Análise do Valor Limite;
   - `eg_` para Error Guessing.
-- Erros são verificados com `pytest.raises(..., match=...)`, que confere também a mensagem.
+- Erros são verificados em dois passos AAA. No *Act*, `with pytest.raises(Tipo) as erro:` confere
+  o tipo da exceção. No *Assert*, `assert str(erro.value) == "mensagem"` confere a mensagem por
+  igualdade exata, que é mais rigorosa que a busca por regex do `match=`.
 
 ### 6.2 Matriz de valores limite (BVA)
 

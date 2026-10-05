@@ -47,7 +47,8 @@ PRD.md · AGENTS.md · AI_USAGE.md · README.md
   `ep_` (partição), `bva_` (valor limite) e `eg_` (error guessing).
 - Os limites testados são os da **matriz da seção 6.2 do PRD**, sempre o valor de cada lado da fronteira.
   Não basta testar valores "do meio".
-- Exceções são verificadas com `pytest.raises(Tipo, match="...")`.
+- Exceções seguem AAA também: `with pytest.raises(Tipo) as erro:` no *Act* e
+  `assert str(erro.value) == "mensagem exata"` no *Assert*. Nunca `# Act / Assert` juntos.
 - Proibido `# pragma: no cover` e proibido reduzir `fail_under`.
 
 ## Permissões

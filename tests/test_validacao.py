@@ -77,9 +77,12 @@ def test_validar_nota_recusa_valor_fora_da_faixa(nota: float) -> None:
     # Arrange
     nome_campo = "P2"
 
-    # Act / Assert
-    with pytest.raises(ValueError, match="P2 deve estar entre 0 e 10"):
+    # Act
+    with pytest.raises(ValueError) as erro:
         validar_nota(nota, nome_campo)
+
+    # Assert
+    assert str(erro.value) == "P2 deve estar entre 0 e 10"
 
 
 # ---------------------------------------------------------------------------
@@ -102,9 +105,12 @@ def test_validar_nota_recusa_tipo_invalido(valor: object) -> None:
     # Arrange
     nome_campo = "Trabalho"
 
-    # Act / Assert
-    with pytest.raises(TypeError, match="Trabalho deve ser numerico"):
+    # Act
+    with pytest.raises(TypeError) as erro:
         validar_nota(valor, nome_campo)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == "Trabalho deve ser numerico"
 
 
 @pytest.mark.unit
@@ -123,9 +129,12 @@ def test_validar_nota_recusa_valor_nao_finito(valor: float) -> None:
     # Arrange
     nome_campo = "P1"
 
-    # Act / Assert
-    with pytest.raises(ValueError, match="P1 deve ser um numero finito"):
+    # Act
+    with pytest.raises(ValueError) as erro:
         validar_nota(valor, nome_campo)
+
+    # Assert
+    assert str(erro.value) == "P1 deve ser um numero finito"
 
 
 # ---------------------------------------------------------------------------
@@ -174,9 +183,12 @@ def test_validar_frequencia_recusa_valor_fora_da_faixa(frequencia: float) -> Non
     # Arrange
     entrada = frequencia
 
-    # Act / Assert
-    with pytest.raises(ValueError, match="Frequencia deve estar entre 0 e 100"):
+    # Act
+    with pytest.raises(ValueError) as erro:
         validar_frequencia(entrada)
+
+    # Assert
+    assert str(erro.value) == "Frequencia deve estar entre 0 e 100"
 
 
 @pytest.mark.unit
@@ -199,6 +211,9 @@ def test_validar_frequencia_recusa_entrada_suspeita(
     # Arrange
     entrada = valor
 
-    # Act / Assert
-    with pytest.raises(erro_esperado, match=mensagem):
+    # Act
+    with pytest.raises(erro_esperado) as erro:
         validar_frequencia(entrada)  # type: ignore[arg-type]
+
+    # Assert
+    assert str(erro.value) == mensagem
